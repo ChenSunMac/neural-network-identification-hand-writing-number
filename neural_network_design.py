@@ -27,7 +27,7 @@ train_indices, test_indices = train_test_split(list(range(5000)))
 print("PERFORMANCE")
 print("-----------")
 
-for i in range(5, 50, 5):
+for i in range(5, 100, 5):
     nn = OCRNeuralNetwork(i, data_matrix, data_labels, train_indices, False)
     performance = str(test(data_matrix, data_labels, test_indices, nn))
     print("{i} Hidden Nodes: {val}".format(i=i, val=performance))

@@ -16,7 +16,7 @@ import random
 HOST_NAME = 'localhost'
 PORT_NUMBER = 8000
 #这个值是通过运行神经网络设计脚本得到的最优值
-HIDDEN_NODE_COUNT = 15
+HIDDEN_NODE_COUNT = 20
 
 # 加载数据集
 data_matrix = np.loadtxt(open('data.csv', 'rb'), delimiter = ',')
