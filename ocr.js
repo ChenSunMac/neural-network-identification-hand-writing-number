@@ -1,18 +1,17 @@
-var onnsDemo = {
+var ocrDemo = {
     CANVAS_WIDTH: 200,
     TRANSLATED_WIDTH: 20,
     PIXEL_WIDTH: 10, // TRANSLATED_WIDTH = CANVAS_WIDTH / PIXEL_WIDTH
     BATCH_SIZE: 1,
 
-    // 服务器端参数
-    PORT: "3000",
+    // Server Variables
+    PORT: "8000",
     HOST: "http://localhost",
 
-    // 颜色变量
+    // Colors
     BLACK: "#000000",
     BLUE: "#0000ff",
 
-    // 客户端训练数据集
     trainArray: [],
     trainingRequestCount: 0,
 
@@ -31,7 +30,6 @@ var onnsDemo = {
         while (matrixSize--) this.data.push(0);
         this.drawGrid(ctx);
 
-        // 绑定事件操作
         canvas.onmousemove = function(e) { this.onMouseMove(e, ctx, canvas) }.bind(this);
         canvas.onmousedown = function(e) { this.onMouseDown(e, ctx, canvas) }.bind(this);
         canvas.onmouseup = function(e) { this.onMouseUp(e, ctx) }.bind(this);
@@ -71,7 +69,6 @@ var onnsDemo = {
     fillSquare: function(ctx, x, y) {
         var xPixel = Math.floor(x / this.PIXEL_WIDTH);
         var yPixel = Math.floor(y / this.PIXEL_WIDTH);
-        // 存储手写输入数据
         this.data[((xPixel - 1)  * this.TRANSLATED_WIDTH + yPixel) - 1] = 1;
 
         ctx.fillStyle = '#ffffff';
@@ -84,11 +81,10 @@ var onnsDemo = {
             alert("Please type and draw a digit value in order to train the network");
             return;
         }
-        // 将数据加入客户端训练数据集
         this.trainArray.push({"y0": this.data, "label": parseInt(digitVal)});
         this.trainingRequestCount++;
 
-        // 将客服端训练数据集发送给服务器端
+        // Time to send a training batch to the server.
         if (this.trainingRequestCount == this.BATCH_SIZE) {
             alert("Sending training data to server...");
             var json = {
@@ -102,7 +98,6 @@ var onnsDemo = {
         }
     },
 
-    // 发送预测请求
     test: function() {
         if (this.data.indexOf(1) < 0) {
             alert("Please draw a digit in order to test the network");
@@ -115,7 +110,6 @@ var onnsDemo = {
         this.sendData(json);
     },
 
-    // 处理服务器响应
     receiveResponse: function(xmlHttp) {
         if (xmlHttp.status != 200) {
             alert("Server returned status " + xmlHttp.status);

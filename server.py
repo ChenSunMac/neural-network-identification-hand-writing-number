@@ -6,7 +6,7 @@ Created on Mon Dec 18 15:44:54 2017
 """
 
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler
 import json
 from ocr import OCRNeuralNetwork
 import numpy as np
@@ -14,7 +14,7 @@ import random
 
 #服务器端配置
 HOST_NAME = 'localhost'
-PORT_NUMBER = 3000
+PORT_NUMBER = 8000
 #这个值是通过运行神经网络设计脚本得到的最优值
 HIDDEN_NODE_COUNT = 15
 
@@ -33,7 +33,7 @@ random.shuffle(train_indice)
 
 nn = OCRNeuralNetwork(HIDDEN_NODE_COUNT, data_matrix, data_labels, train_indice);
 
-class JSONHandler(BaseHTTPRequestHandler):
+class JSONHandler(SimpleHTTPRequestHandler):
     """处理接收到的POST请求"""
     def do_POST(self):
         response_code = 200
